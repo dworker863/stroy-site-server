@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -10,6 +10,15 @@ export class ProjectsService {
   constructor(@InjectModel(Project) private projectModel: typeof Project) {}
 
   async create(createProjectDto: CreateProjectDto): Promise<IProject> {
+    const checkProject = await this.getProjectByName(createProjectDto.name);
+
+    if (checkProject) {
+      throw new HttpException(
+        'Работа с такими названием уже существует',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const project = await this.projectModel.create(createProjectDto);
     return project;
   }
@@ -25,6 +34,15 @@ export class ProjectsService {
   }
 
   async update(id: number, updateProjectDto: UpdateProjectDto): Promise<any> {
+    const checkProject = await this.getProjectByName(updateProjectDto.name);
+
+    if (checkProject && checkProject.id !== id) {
+      throw new HttpException(
+        'Работа с такими названием уже существует',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const project = await this.projectModel.update(updateProjectDto, {
       where: { id },
       returning: true,
@@ -35,6 +53,11 @@ export class ProjectsService {
 
   async remove(id: number): Promise<number> {
     const project = await this.projectModel.destroy({ where: { id } });
+    return project;
+  }
+
+  async getProjectByName(name: string): Promise<IProject> {
+    const project = await this.projectModel.findOne({ where: { name } });
     return project;
   }
 }
