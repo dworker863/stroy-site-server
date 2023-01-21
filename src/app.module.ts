@@ -20,6 +20,7 @@ import { ProjectsModule } from './projects/projects.module';
       password: process.env.DB_PASSWORD,
       autoLoadModels: true,
       synchronize: true,
+      query: { raw: true },
     }),
     ProjectsModule,
   ],
