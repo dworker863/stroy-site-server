@@ -1,8 +1,8 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
-import { IRreview } from '../interfaces/reviews.interface';
+import { IReview } from '../interfaces/reviews.interface';
 
 @Table({ tableName: 'reviews' })
-export class Review extends Model<Review, IRreview> {
+export class Review extends Model<Review, IReview> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
