@@ -8,6 +8,7 @@ import { Review } from './models/reviews.model';
 @Injectable()
 export class ReviewsService {
   constructor(@InjectModel(Review) private reviewModel: typeof Review) {}
+
   async create(createReviewDto: CreateReviewDto): Promise<IReview> {
     const review = await this.reviewModel.create(createReviewDto);
     return review;
