@@ -24,7 +24,7 @@ export class ReviewsController {
     @UploadedFile() photo: Express.Multer.File,
     @Body() createReviewDto: CreateReviewDto,
   ) {
-    return this.reviewsService.create(createReviewDto);
+    return this.reviewsService.create(createReviewDto, photo);
   }
 
   @Get()

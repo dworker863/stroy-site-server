@@ -6,12 +6,17 @@ import { AppService } from './app.service';
 import { ProjectsModule } from './projects/projects.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
