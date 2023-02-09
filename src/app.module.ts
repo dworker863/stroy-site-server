@@ -8,6 +8,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import * as path from 'path';
 
 @Module({
@@ -34,6 +35,7 @@ import * as path from 'path';
     ReviewsModule,
     FilesModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
