@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from './../auth/guards/jwt.guard';
 import {
   Controller,
   Get,
@@ -8,6 +9,7 @@ import {
   Delete,
   UseInterceptors,
   UploadedFiles,
+  UseGuards,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -27,6 +29,7 @@ export class ProjectsController {
     return this.projectsService.create(createProjectDto, images);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.projectsService.findAll();
