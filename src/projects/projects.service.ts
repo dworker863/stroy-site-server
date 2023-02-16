@@ -50,7 +50,11 @@ export class ProjectsService {
     return project;
   }
 
-  async update(id: number, updateProjectDto: UpdateProjectDto): Promise<any> {
+  async update(
+    id: number,
+    updateProjectDto: UpdateProjectDto,
+    images: Array<Express.Multer.File>,
+  ): Promise<any> {
     const checkProject = await this.getProjectByName(updateProjectDto.name);
 
     if (checkProject && checkProject.id !== id) {
@@ -60,10 +64,19 @@ export class ProjectsService {
       );
     }
 
-    const project = await this.projectModel.update(updateProjectDto, {
-      where: { id },
-      returning: true,
-    });
+    const fileNames = await Promise.all(
+      images.map(async (image) => {
+        return await this.fileService.createFile(image);
+      }),
+    );
+
+    const project = await this.projectModel.update(
+      { ...updateProjectDto, images: fileNames },
+      {
+        where: { id },
+        returning: true,
+      },
+    );
 
     return project;
   }

@@ -36,11 +36,19 @@ export class ReviewsService {
     return review;
   }
 
-  async update(id: number, updateReviewDto: UpdateReviewDto): Promise<any> {
-    const review = await this.reviewModel.update(updateReviewDto, {
-      where: { id },
-      returning: true,
-    });
+  async update(
+    id: number,
+    updateReviewDto: UpdateReviewDto,
+    photo: Express.Multer.File,
+  ): Promise<any> {
+    const fileName = await this.fileService.createFile(photo);
+    const review = await this.reviewModel.update(
+      { ...updateReviewDto, photo: fileName },
+      {
+        where: { id },
+        returning: true,
+      },
+    );
 
     return review;
   }

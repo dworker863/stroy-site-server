@@ -49,6 +49,8 @@ export class MaterialsService {
       where: { id },
       returning: true,
     });
+    console.log(material);
+
     await material[1][0].$set('services', updateMaterialDto.services);
 
     return material;

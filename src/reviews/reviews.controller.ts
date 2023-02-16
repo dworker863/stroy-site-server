@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import {
   Controller,
   Get,
@@ -8,6 +9,7 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -19,6 +21,7 @@ export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('photo'))
   create(
     @UploadedFile() photo: Express.Multer.File,
@@ -38,11 +41,18 @@ export class ReviewsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
-    return this.reviewsService.update(+id, updateReviewDto);
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('photo'))
+  update(
+    @Param('id') id: string,
+    @UploadedFile() photo: Express.Multer.File,
+    @Body() updateReviewDto: UpdateReviewDto,
+  ) {
+    return this.reviewsService.update(+id, updateReviewDto, photo);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.reviewsService.remove(+id);
   }

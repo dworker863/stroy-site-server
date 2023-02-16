@@ -12,16 +12,13 @@ import {
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
-import { ERole, Roles } from 'src/auth/decorators/roles.decorator';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('services')
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 
   @Post()
-  @Roles(ERole.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   create(@Body() createServiceDto: CreateServiceDto) {
     console.log(createServiceDto);
 
@@ -39,15 +36,13 @@ export class ServicesController {
   }
 
   @Patch(':id')
-  @Roles(ERole.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
     return this.servicesService.update(+id, updateServiceDto);
   }
 
   @Delete(':id')
-  @Roles(ERole.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.servicesService.remove(+id);
   }

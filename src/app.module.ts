@@ -1,3 +1,5 @@
+import { ServicesModule } from './services/services.module';
+import { MaterialsModule } from './materials/materials.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -33,6 +35,8 @@ import * as path from 'path';
     }),
     ProjectsModule,
     ReviewsModule,
+    MaterialsModule,
+    ServicesModule,
     FilesModule,
     UsersModule,
     AuthModule,
