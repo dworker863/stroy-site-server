@@ -1,5 +1,4 @@
 import {
-  AllowNull,
   BelongsToMany,
   Column,
   DataType,

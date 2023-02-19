@@ -1,4 +1,3 @@
-import { Material } from 'src/materials/models/materials.model';
 import { Service } from './models/services.model';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';

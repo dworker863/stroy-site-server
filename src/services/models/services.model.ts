@@ -2,11 +2,9 @@ import {
   BelongsToMany,
   Column,
   DataType,
-  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
-import { IMaterial } from 'src/materials/interfaces/material.interface';
 import { Material } from 'src/materials/models/materials.model';
 import { IService } from '../interfaces/service.interface';
 import { ServiceMaterials } from './service-materials.model';

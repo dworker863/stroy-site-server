@@ -24,6 +24,7 @@ export class MaterialsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.materialsService.findAll();
   }
