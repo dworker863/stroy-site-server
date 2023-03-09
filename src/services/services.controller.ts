@@ -20,8 +20,6 @@ export class ServicesController {
   @Post()
   @UseGuards(JwtAuthGuard)
   create(@Body() createServiceDto: CreateServiceDto) {
-    console.log(createServiceDto);
-
     return this.servicesService.create(createServiceDto);
   }
 
