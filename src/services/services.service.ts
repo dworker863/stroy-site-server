@@ -1,4 +1,3 @@
-import { Material } from 'src/materials/models/materials.model';
 import { Service } from './models/services.model';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
@@ -21,15 +20,12 @@ export class ServicesService {
     }
 
     const service = await this.serviceModel.create(createServiceDto);
-    await service.$set('materials', createServiceDto.materials);
 
     return service;
   }
 
   async findAll(): Promise<IService[]> {
-    const services = await this.serviceModel.findAll({
-      include: { all: true },
-    });
+    const services = await this.serviceModel.findAll();
     return services;
   }
 
@@ -52,8 +48,6 @@ export class ServicesService {
       where: { id },
       returning: true,
     });
-
-    await service[1][0].$set('materials', updateServiceDto.materials);
 
     return service;
   }

@@ -27,6 +27,8 @@ export class ServicesController {
 
   @Get()
   findAll() {
+    console.log(1111);
+
     return this.servicesService.findAll();
   }
 
