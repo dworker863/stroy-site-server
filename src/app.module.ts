@@ -30,7 +30,7 @@ import * as path from 'path';
       password: process.env.DB_PASSWORD,
       autoLoadModels: true,
       synchronize: true,
-      query: { raw: true },
+      // query: { raw: true },
     }),
     ProjectsModule,
     ReviewsModule,
