@@ -14,14 +14,11 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(@Req() req, @Res({ passthrough: true }) res) {
-    // console.log(req.user);
+  async login(@Req() req) {
     const { username, id, access_token } = await this.authService.login(
       req.user.dataValues,
     );
 
-    res.cookie('token', access_token, { httpOnly: true });
-
-    return { username, id };
+    return { username, id, access_token };
   }
 }

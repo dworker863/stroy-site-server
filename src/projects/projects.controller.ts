@@ -27,6 +27,8 @@ export class ProjectsController {
     @UploadedFiles() images: Array<Express.Multer.File>,
     @Body() createProjectDto: CreateProjectDto,
   ) {
+    console.log(2222);
+
     return this.projectsService.create(createProjectDto, images);
   }
 

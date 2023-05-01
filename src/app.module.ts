@@ -5,7 +5,6 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectsModule } from './projects/projects.module';
-import { ReviewsModule } from './reviews/reviews.module';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
@@ -33,7 +32,6 @@ import * as path from 'path';
       // query: { raw: true },
     }),
     ProjectsModule,
-    ReviewsModule,
     ServicesModule,
     FilesModule,
     UsersModule,

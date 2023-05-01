@@ -17,6 +17,9 @@ export class Project extends Model<Project, IProject> {
   @Column({ type: DataType.STRING, allowNull: true })
   description: string;
 
+  @Column({ type: DataType.STRING, allowNull: true })
+  review: string;
+
   @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true })
   images: string[];
 }
