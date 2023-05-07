@@ -4,4 +4,5 @@ export interface IProject {
   description: string;
   review: string;
   images: string[];
+  price: number;
 }

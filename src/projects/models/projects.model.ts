@@ -22,4 +22,7 @@ export class Project extends Model<Project, IProject> {
 
   @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true })
   images: string[];
+
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  price: number;
 }
