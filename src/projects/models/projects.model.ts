@@ -1,5 +1,6 @@
 import { IProject } from './../interfaces/project.interface';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasOne, Model, Table } from 'sequelize-typescript';
+import { Review } from './reviews.model';
 
 @Table({ tableName: 'projects' })
 export class Project extends Model<Project, IProject> {
@@ -17,8 +18,9 @@ export class Project extends Model<Project, IProject> {
   @Column({ type: DataType.STRING, allowNull: true })
   description: string;
 
+  @HasOne(() => Review, { as: 'projectReview' })
   @Column({ type: DataType.STRING, allowNull: true })
-  review: string;
+  review: Review;
 
   @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true })
   images: string[];

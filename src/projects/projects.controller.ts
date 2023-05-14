@@ -15,6 +15,7 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CreateReviewDto } from './dto/create-review.dto';
 
 @Controller('projects')
 export class ProjectsController {
@@ -27,8 +28,6 @@ export class ProjectsController {
     @UploadedFiles() images: Array<Express.Multer.File>,
     @Body() createProjectDto: CreateProjectDto,
   ) {
-    console.log(2222);
-
     return this.projectsService.create(createProjectDto, images);
   }
 
@@ -57,5 +56,14 @@ export class ProjectsController {
   @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.projectsService.remove(+id);
+  }
+
+  @Post(':id/review')
+  @UseGuards(JwtAuthGuard)
+  createReview(
+    @Param('id') projectId: number,
+    @Body() createReviewDto: CreateReviewDto,
+  ) {
+    return this.projectsService.createReview(projectId, createReviewDto);
   }
 }
