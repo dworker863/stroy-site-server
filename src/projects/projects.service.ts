@@ -104,7 +104,6 @@ export class ProjectsService {
     if (!checkProject.projectReview && updateProjectDto.review) {
       await this.createReview(id, JSON.parse(String(updateProjectDto.review)));
     } else if (checkProject.projectReview && updateProjectDto.review) {
-      console.log('sdfsdfsdf');
       await this.updateReview(id, JSON.parse(String(updateProjectDto.review)));
     } else {
       await this.removeReview(id);
@@ -130,8 +129,6 @@ export class ProjectsService {
     projectId: number,
     createReviewDto: CreateReviewDto,
   ): Promise<IReview> {
-    console.log(1111);
-
     const review = await this.reviewModel.create({
       projectId,
       ...createReviewDto,
@@ -144,7 +141,10 @@ export class ProjectsService {
     return review;
   }
 
-  async updateReview(projectId: number, upadateReviewDto: UpdateReviewDto) {
+  async updateReview(
+    projectId: number,
+    upadateReviewDto: UpdateReviewDto,
+  ): Promise<any> {
     const review = await this.reviewModel.update(upadateReviewDto, {
       where: { projectId },
       returning: true,

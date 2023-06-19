@@ -30,6 +30,8 @@ export class ProjectsController {
     @UploadedFiles() images: Array<Express.Multer.File>,
     @Body() createProjectDto: CreateProjectDto,
   ): Promise<IProject> {
+    console.log(1111);
+
     return this.projectsService.create(createProjectDto, images);
   }
 
@@ -51,8 +53,6 @@ export class ProjectsController {
     @UploadedFiles() images: Array<Express.Multer.File>,
     @Body() updateProjectDto: UpdateProjectDto,
   ): Promise<any> {
-    // console.log(updateProjectDto.review);
-
     return this.projectsService.update(+id, updateProjectDto, images);
   }
 
