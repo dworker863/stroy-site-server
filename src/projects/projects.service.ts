@@ -1,3 +1,4 @@
+import { UpdateReviewDto } from './dto/update-review.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FilesService } from 'src/files/files.service';
@@ -7,6 +8,7 @@ import { IProject } from './interfaces/project.interface';
 import { Project } from './models/projects.model';
 import { Review } from './models/reviews.model';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { IReview } from './interfaces/review.interface';
 
 @Injectable()
 export class ProjectsService {
@@ -42,10 +44,12 @@ export class ProjectsService {
       ),
     });
 
-    const review = await this.reviewModel.create({
-      projectId: project.id,
-      ...JSON.parse(String(createProjectDto.review)),
-    });
+    if (createProjectDto.review) {
+      await this.createReview(
+        project.id,
+        JSON.parse(String(createProjectDto.review)),
+      );
+    }
 
     return project;
   }
@@ -58,7 +62,9 @@ export class ProjectsService {
   }
 
   async findOne(id: number): Promise<IProject> {
-    const project = await this.projectModel.findByPk(id);
+    const project = await this.projectModel.findByPk(id, {
+      include: [{ model: Review }],
+    });
     return project;
   }
 
@@ -71,7 +77,7 @@ export class ProjectsService {
 
     if (checkProject && checkProject.id !== id) {
       throw new HttpException(
-        'Проект с такими названием уже существует',
+        'Работа с такими названием уже существует',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -95,6 +101,15 @@ export class ProjectsService {
       },
     );
 
+    if (!checkProject.projectReview && updateProjectDto.review) {
+      await this.createReview(id, JSON.parse(String(updateProjectDto.review)));
+    } else if (checkProject.projectReview && updateProjectDto.review) {
+      console.log('sdfsdfsdf');
+      await this.updateReview(id, JSON.parse(String(updateProjectDto.review)));
+    } else {
+      await this.removeReview(id);
+    }
+
     return project;
   }
 
@@ -104,15 +119,37 @@ export class ProjectsService {
   }
 
   async getProjectByName(name: string): Promise<IProject> {
-    const project = await this.projectModel.findOne({ where: { name } });
+    const project = await this.projectModel.findOne({
+      where: { name },
+      include: [{ model: Review }],
+    });
     return project;
   }
 
-  async createReview(projectId: number, createReviewDto: CreateReviewDto) {
+  async createReview(
+    projectId: number,
+    createReviewDto: CreateReviewDto,
+  ): Promise<IReview> {
+    console.log(1111);
+
     const review = await this.reviewModel.create({
       projectId,
       ...createReviewDto,
     });
+    return review;
+  }
+
+  async removeReview(projectId: number): Promise<number> {
+    const review = await this.reviewModel.destroy({ where: { projectId } });
+    return review;
+  }
+
+  async updateReview(projectId: number, upadateReviewDto: UpdateReviewDto) {
+    const review = await this.reviewModel.update(upadateReviewDto, {
+      where: { projectId },
+      returning: true,
+    });
+
     return review;
   }
 }

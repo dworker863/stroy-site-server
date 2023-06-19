@@ -4,7 +4,6 @@ import {
   DataType,
   ForeignKey,
   Model,
-  Sequelize,
   Table,
 } from 'sequelize-typescript';
 import { IReview } from '../interfaces/review.interface';
@@ -36,6 +35,6 @@ export class Review extends Model<Review, IReview> {
   @Column({ type: DataType.STRING })
   text: string;
 
-  @Column({ type: DataType.DATE, defaultValue: Sequelize.literal('NOW()') })
-  date: Date;
+  @Column({ type: DataType.STRING })
+  date: string;
 }

@@ -16,6 +16,8 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { IProject } from './interfaces/project.interface';
+import { IReview } from './interfaces/review.interface';
 
 @Controller('projects')
 export class ProjectsController {
@@ -27,12 +29,12 @@ export class ProjectsController {
   create(
     @UploadedFiles() images: Array<Express.Multer.File>,
     @Body() createProjectDto: CreateProjectDto,
-  ) {
+  ): Promise<IProject> {
     return this.projectsService.create(createProjectDto, images);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<IProject[]> {
     return this.projectsService.findAll();
   }
 
@@ -48,13 +50,15 @@ export class ProjectsController {
     @Param('id') id: string,
     @UploadedFiles() images: Array<Express.Multer.File>,
     @Body() updateProjectDto: UpdateProjectDto,
-  ) {
+  ): Promise<any> {
+    // console.log(updateProjectDto.review);
+
     return this.projectsService.update(+id, updateProjectDto, images);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<number> {
     return this.projectsService.remove(+id);
   }
 
@@ -63,7 +67,7 @@ export class ProjectsController {
   createReview(
     @Param('id') projectId: number,
     @Body() createReviewDto: CreateReviewDto,
-  ) {
+  ): Promise<IReview> {
     return this.projectsService.createReview(projectId, createReviewDto);
   }
 }

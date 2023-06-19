@@ -7,4 +7,5 @@ export interface IProject {
   review: IReview;
   images: string[];
   price: number;
+  projectReview?: any;
 }

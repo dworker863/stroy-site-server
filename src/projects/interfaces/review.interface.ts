@@ -4,5 +4,5 @@ export interface IReview {
   author: string;
   stars: number;
   text: string;
-  date: Date;
+  date: string;
 }

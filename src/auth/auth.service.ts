@@ -11,7 +11,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async registration(userDto: CreateUserDto): Promise<string> {
+  async registration(userDto: CreateUserDto): Promise<any> {
     const user = await this.usersService.findOne(userDto.username);
 
     if (user) {
@@ -23,12 +23,23 @@ export class AuthService {
 
     const hash = await bcrypt.hash(userDto.password, 10);
 
-    const { username } = await this.usersService.create({
+    await this.usersService.create({
       ...userDto,
       password: hash,
     });
 
-    return username;
+    const result = await this.login(userDto);
+
+    return result;
+  }
+
+  async login(user: any): Promise<any> {
+    const payload = { username: user.username, sub: user.id };
+
+    return {
+      ...payload,
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
   async validate(userDto: CreateUserDto): Promise<any> {
@@ -42,14 +53,5 @@ export class AuthService {
     }
 
     return null;
-  }
-
-  async login(user: any) {
-    const payload = { username: user.username, id: user.id };
-
-    return {
-      ...payload,
-      access_token: this.jwtService.sign(payload),
-    };
   }
 }
