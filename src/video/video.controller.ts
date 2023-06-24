@@ -14,20 +14,23 @@ import { VideoService } from './video.service';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { IVideo } from './interfaces/video.interface';
 
-@Controller('video')
+@Controller('videos')
 export class VideoController {
   constructor(private readonly videoService: VideoService) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FilesInterceptor('video'))
+  @UseInterceptors(FileInterceptor('video'))
   create(
     @UploadedFile() video: Express.Multer.File,
     @Body() createVideoDto: CreateVideoDto,
   ): Promise<IVideo> {
+    console.log(createVideoDto);
+    console.log(video);
+
     return this.videoService.create(createVideoDto, video);
   }
 
@@ -43,7 +46,7 @@ export class VideoController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FilesInterceptor('video'))
+  @UseInterceptors(FileInterceptor('video'))
   update(
     @Param('id') id: string,
     @UploadedFile() video: Express.Multer.File,

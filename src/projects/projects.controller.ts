@@ -30,7 +30,7 @@ export class ProjectsController {
     @UploadedFiles() images: Array<Express.Multer.File>,
     @Body() createProjectDto: CreateProjectDto,
   ): Promise<IProject> {
-    console.log(1111);
+    console.log(images);
 
     return this.projectsService.create(createProjectDto, images);
   }
