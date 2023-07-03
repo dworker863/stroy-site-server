@@ -28,9 +28,7 @@ export class VideoController {
     @UploadedFile() video: Express.Multer.File,
     @Body() createVideoDto: CreateVideoDto,
   ): Promise<IVideo> {
-    console.log(createVideoDto);
     console.log(video);
-
     return this.videoService.create(createVideoDto, video);
   }
 
@@ -52,6 +50,8 @@ export class VideoController {
     @UploadedFile() video: Express.Multer.File,
     @Body() updateVideoDto: UpdateVideoDto,
   ): Promise<any> {
+    console.log(video);
+
     return this.videoService.update(+id, updateVideoDto, video);
   }
 

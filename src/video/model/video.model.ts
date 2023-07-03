@@ -14,7 +14,7 @@ export class Video extends Model<Video, IVideo> {
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: DataType.STRING(2048), allowNull: true })
   description: string;
 
   @Column({ type: DataType.STRING, allowNull: false })

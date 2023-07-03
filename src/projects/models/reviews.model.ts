@@ -32,7 +32,7 @@ export class Review extends Model<Review, IReview> {
   @Column({ type: DataType.INTEGER })
   stars: number;
 
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.STRING(2048) })
   text: string;
 
   @Column({ type: DataType.STRING })

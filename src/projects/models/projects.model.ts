@@ -15,11 +15,11 @@ export class Project extends Model<Project, IProject> {
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: DataType.STRING(2048), allowNull: true })
   description: string;
 
   @HasOne(() => Review, { as: 'projectReview' })
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: DataType.STRING(4096), allowNull: true })
   review: Review;
 
   @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true })

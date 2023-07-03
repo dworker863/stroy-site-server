@@ -25,13 +25,21 @@ export class VideoService {
       );
     }
 
-    const fileName = await this.fileService.createFile(video);
+    if (video) {
+      const fileName = await this.fileService.createFile(video);
 
-    const videoENtity = await this.videoModel.create({
-      ...createVideoDto,
-      video: 'http://192.168.1.4:8000/' + fileName,
-    });
-    return videoENtity;
+      const videoENtity = await this.videoModel.create({
+        ...createVideoDto,
+        video: 'http://192.168.1.4:8000/' + fileName,
+      });
+      return videoENtity;
+    } else {
+      const videoENtity = await this.videoModel.create({
+        ...createVideoDto,
+      });
+
+      return videoENtity;
+    }
   }
 
   async findAll(): Promise<IVideo[]> {
