@@ -13,8 +13,8 @@ export class UsersService {
     return user;
   }
 
-  async findOne(username: string): Promise<IUser> {
-    const user = await this.userModel.findOne({ where: { username } });
+  async findOne(email: string): Promise<IUser> {
+    const user = await this.userModel.findOne({ where: { email } });
     return user;
   }
 }

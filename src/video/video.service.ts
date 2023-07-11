@@ -30,7 +30,7 @@ export class VideoService {
 
       const videoENtity = await this.videoModel.create({
         ...createVideoDto,
-        video: 'http://192.168.1.4:8000/' + fileName,
+        video: 'http://192.168.1.3:8000/' + fileName,
       });
       return videoENtity;
     } else {
@@ -70,7 +70,7 @@ export class VideoService {
     const videoEntity = await this.videoModel.update(
       {
         ...updateVideoDto,
-        video: 'http://192.168.1.4:8000/' + fileName,
+        video: 'http://192.168.1.3:8000/' + fileName,
       },
       {
         where: { id },

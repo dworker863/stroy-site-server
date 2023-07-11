@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   async registration(userDto: CreateUserDto): Promise<any> {
-    const user = await this.usersService.findOne(userDto.username);
+    const user = await this.usersService.findOne(userDto.email);
 
     if (user) {
       throw new HttpException(
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   async login(user: any): Promise<any> {
-    const payload = { username: user.username, sub: user.id };
+    const payload = { email: user.email, sub: user.id };
 
     return {
       ...payload,
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   async validate(userDto: CreateUserDto): Promise<any> {
-    const user = await this.usersService.findOne(userDto.username);
+    const user = await this.usersService.findOne(userDto.email);
     const passwordEquals =
       user && (await bcrypt.compare(userDto.password, user.password));
 

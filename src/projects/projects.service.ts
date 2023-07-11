@@ -40,7 +40,7 @@ export class ProjectsService {
     const project = await this.projectModel.create({
       ...createProjectDto,
       images: fileNames.map(
-        (fileName) => 'http://192.168.1.4:8000/' + fileName,
+        (fileName) => 'http://192.168.1.3:8000/' + fileName,
       ),
     });
 
@@ -92,7 +92,7 @@ export class ProjectsService {
       {
         ...updateProjectDto,
         images: fileNames.map(
-          (fileName) => 'http://192.168.1.4:8000/' + fileName,
+          (fileName) => 'http://192.168.1.3:8000/' + fileName,
         ),
       },
       {

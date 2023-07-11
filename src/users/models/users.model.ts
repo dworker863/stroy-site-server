@@ -12,7 +12,7 @@ export class User extends Model<User, IUser> {
   id: number;
 
   @Column({ type: DataType.STRING, allowNull: false })
-  username: string;
+  email: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
   password: string;
