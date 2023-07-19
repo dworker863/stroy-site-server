@@ -10,6 +10,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { VideoModule } from './video/video.module';
+import { MailModule } from './mail/mail.module';
 import * as path from 'path';
 
 @Module({
@@ -37,6 +38,7 @@ import * as path from 'path';
     ServicesModule,
     FilesModule,
     VideoModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
