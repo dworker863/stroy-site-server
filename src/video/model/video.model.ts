@@ -1,8 +1,8 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
-import { IReview } from '../interfaces/reviews.interface';
+import { IVideo } from '../interfaces/video.interface';
 
-@Table({ tableName: 'reviews' })
-export class Review extends Model<Review, IReview> {
+@Table({ tableName: 'video' })
+export class Video extends Model<Video, IVideo> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -12,14 +12,14 @@ export class Review extends Model<Review, IReview> {
   id: number;
 
   @Column({ type: DataType.STRING, allowNull: false })
-  author: string;
+  name: string;
+
+  @Column({ type: DataType.STRING(2048), allowNull: true })
+  description: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
-  message: string;
+  video: string;
 
   @Column({ type: DataType.STRING, allowNull: true })
-  photo: string;
-
-  @Column({ type: DataType.DATE, allowNull: false })
-  date: Date;
+  link: string;
 }

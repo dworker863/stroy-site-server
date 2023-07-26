@@ -8,13 +8,13 @@ import { User } from './models/users.model';
 export class UsersService {
   constructor(@InjectModel(User) private userModel: typeof User) {}
 
-  async create(userDto: CreateUserDto) {
+  async create(userDto: CreateUserDto): Promise<IUser> {
     const user = await this.userModel.create(userDto);
     return user;
   }
 
-  async findOne(username: string): Promise<IUser> {
-    const user = await this.userModel.findOne({ where: { username } });
+  async findOne(email: string): Promise<IUser> {
+    const user = await this.userModel.findOne({ where: { email } });
     return user;
   }
 }

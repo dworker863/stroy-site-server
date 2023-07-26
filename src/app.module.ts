@@ -1,16 +1,16 @@
 import { ServicesModule } from './services/services.module';
-import { MaterialsModule } from './materials/materials.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectsModule } from './projects/projects.module';
-import { ReviewsModule } from './reviews/reviews.module';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { VideoModule } from './video/video.module';
+import { MailModule } from './mail/mail.module';
 import * as path from 'path';
 
 @Module({
@@ -31,15 +31,14 @@ import * as path from 'path';
       password: process.env.DB_PASSWORD,
       autoLoadModels: true,
       synchronize: true,
-      // query: { raw: true },
     }),
-    ProjectsModule,
-    ReviewsModule,
-    MaterialsModule,
-    ServicesModule,
-    FilesModule,
     UsersModule,
     AuthModule,
+    ProjectsModule,
+    ServicesModule,
+    FilesModule,
+    VideoModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

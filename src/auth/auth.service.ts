@@ -11,8 +11,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async registration(userDto: CreateUserDto): Promise<string> {
-    const user = await this.usersService.findOne(userDto.username);
+  async registration(userDto: CreateUserDto): Promise<any> {
+    const user = await this.usersService.findOne(userDto.email);
 
     if (user) {
       throw new HttpException(
@@ -23,16 +23,27 @@ export class AuthService {
 
     const hash = await bcrypt.hash(userDto.password, 10);
 
-    const { username } = await this.usersService.create({
+    await this.usersService.create({
       ...userDto,
       password: hash,
     });
 
-    return username;
+    const result = await this.login(userDto);
+
+    return result;
+  }
+
+  async login(user: any): Promise<any> {
+    const payload = { email: user.email, sub: user.id };
+
+    return {
+      ...payload,
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
   async validate(userDto: CreateUserDto): Promise<any> {
-    const user = await this.usersService.findOne(userDto.username);
+    const user = await this.usersService.findOne(userDto.email);
     const passwordEquals =
       user && (await bcrypt.compare(userDto.password, user.password));
 
@@ -42,14 +53,5 @@ export class AuthService {
     }
 
     return null;
-  }
-
-  async login(user: any) {
-    const payload = { username: user.username, id: user.id };
-
-    return {
-      ...payload,
-      access_token: this.jwtService.sign(payload),
-    };
   }
 }

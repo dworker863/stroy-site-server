@@ -7,7 +7,10 @@ import * as uuid from 'uuid';
 export class FilesService {
   async createFile(file: Express.Multer.File): Promise<string> {
     try {
-      const fileName = uuid.v4() + '.jpg';
+      console.log(file);
+      const fileName = uuid.v4() + `.${file.originalname.slice(-3)}`;
+      console.log(fileName);
+
       const filePath = path.resolve(__dirname, '..', 'static');
 
       if (!fs.existsSync(filePath)) {
